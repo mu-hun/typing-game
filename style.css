@@ -2,3 +2,8 @@
 	background-color: lightcoral;
 	border: red;
 }
+
+input:focus {
+	background-color: lightyellow;
+	border: yellow;
+}
