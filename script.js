@@ -8,6 +8,9 @@ const quoteElement = document.getElementById('quote')
 const messageElement = document.getElementById('message')
 const typedValueElement = document.getElementById('typed-value')
 const startButton = document.getElementById('start')
+const dialog = document.querySelector('dialog')
+const dialogCloseButton = dialog.querySelector('button')
+
 startButton.focus()
 
 function setNextWord() {
@@ -41,11 +44,6 @@ typedValueElement.addEventListener('input', (event) => {
     const elapsedTime = new Date().getTime() - startTime
 
     printMessage(elapsedTime)
-
-    event.target.disabled = true
-    event.target.value = ''
-    startButton.disabled = false
-    startButton.focus()
     return
   }
   if (typedValue.endsWith(' ') && typedValue.trim() === currentWord) {
@@ -75,4 +73,14 @@ function printMessage(elapsedTime) {
   } seconds. ${bestTime ? `Your best time is ${bestTime / 1000} seconds.` : ''}`
 
   messageElement.innerText = message
+
+  dialog.showModal()
 }
+
+dialogCloseButton.addEventListener('click', () => {
+  dialog.close()
+  typedValueElement.disabled = true
+  typedValueElement.value = ''
+  startButton.disabled = false
+  startButton.focus()
+})
