@@ -39,10 +39,9 @@ typedValueElement.addEventListener('input', (event) => {
 
   if (typedValue === currentWord && wordIndex === words.length - 1) {
     const elapsedTime = new Date().getTime() - startTime
-    const message = `CONGRATULATIONS! You finished in ${
-      elapsedTime / 1000
-    } seconds.`
-    messageElement.innerText = message
+
+    printMessage(elapsedTime)
+
     event.target.disabled = true
     event.target.value = ''
     startButton.disabled = false
@@ -58,3 +57,22 @@ typedValueElement.addEventListener('input', (event) => {
 
   typedValueElement['aria-invalid'] = !currentWord.startsWith(typedValue)
 })
+
+function printMessage(elapsedTime) {
+  const bestTime = parseInt(localStorage.getItem('bestTime'))
+
+  if (!bestTime || elapsedTime < bestTime) {
+    localStorage.setItem('bestTime', elapsedTime)
+    const message = `CONGRATULATIONS! You finished in ${
+      elapsedTime / 1000
+    } seconds. NEW RECORD!`
+    messageElement.innerText = message
+    return
+  }
+
+  const message = `CONGRATULATIONS! You finished in ${
+    elapsedTime / 1000
+  } seconds. ${bestTime ? `Your best time is ${bestTime / 1000} seconds.` : ''}`
+
+  messageElement.innerText = message
+}
