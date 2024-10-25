@@ -1,8 +1,4 @@
-.highlight {
-	background-color: yellow;
-}
-
-.error {
+[aria-invalid="true"] {
 	background-color: lightcoral;
 	border: red;
 }
